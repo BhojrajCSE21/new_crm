@@ -158,6 +158,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
           key: _formKey,
           child: ListView(
             children: [
+              _buildSectionTitle('Account Information'),
               _buildTextField(label: 'Account Owner', controller: _accountOwnerController),
               _buildTextField(label: 'Account Name', controller: _accountNameController),
               _buildTextField(label: 'Account Number', controller: _accountNumberController),
@@ -178,7 +179,8 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
               _buildTextField(label: 'Mobile', controller: _mobileController),
               _buildTextField(label: 'Fax', controller: _faxController),
               _buildTextField(label: 'Website', controller: _websiteController),
-              _buildTextField(label: 'Annual Revenue', controller: _annualRevenueController),
+              _buildTextField(label: 'Rating', controller: _ratingController),
+              _buildTextField(label: 'Annual Revenue ₹', controller: _annualRevenueController),
               _buildTextField(label: 'Ticker Symbol', controller: _tickerSymbolController),
               _buildDropdownField(
                 label: 'Ownership',
@@ -192,6 +194,9 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                 value: _selectedEmployees,
                 onChanged: (value) => setState(() => _selectedEmployees = value),
               ),
+              _buildTextField(label: 'SIC Code', controller: _sicCodeController),
+              const SizedBox(height: 20),
+              _buildSectionTitle('Address Information'),
               _buildTextField(label: 'Billing Street', controller: _billingStreetController),
               _buildTextField(label: 'Billing City', controller: _billingCityController),
               _buildTextField(label: 'Billing Zip Code', controller: _billingZipCodeController),
@@ -202,8 +207,8 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
               _buildTextField(label: 'Shipping Zip Code', controller: _shippingZipCodeController),
               _buildTextField(label: 'Shipping State', controller: _shippingStateController),
               _buildTextField(label: 'Shipping Country', controller: _shippingCountryController),
-              _buildTextField(label: 'SIC Code', controller: _sicCodeController),
-              _buildTextField(label: 'Rating', controller: _ratingController),
+              const SizedBox(height: 20),
+              _buildSectionTitle('Description Information'),
               _buildTextField(label: 'Description', controller: _descriptionController),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -213,6 +218,16 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
     );
   }
