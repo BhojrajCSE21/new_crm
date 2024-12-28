@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:new_crm/utils/general/secure_storage.dart';
 import 'package:new_crm/view/auth/login_screen.dart';
+import 'package:new_crm/view/contact/screens/contact_screen.dart';
+import 'package:new_crm/view/contact/screens/new_contact_screen.dart';
 import 'package:new_crm/view/leads/screens/lead.dart';
 
 class MainMenuDrawer extends StatelessWidget {
@@ -130,17 +132,33 @@ class MainMenuDrawer extends StatelessWidget {
                       title: Text('New Contact'),
                       onTap: () {
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('New Contact selected')),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NewContactScreen()),
                         );
                       },
                     ),
+
                     ListTile(
                       title: Text('Export'),
                       onTap: () {
                         Navigator.pop(context);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Export selected')),
+                        );
+                      },
+                    ),
+                    // Navigate to LeadsPage when tapped on Leads option
+                    ListTile(
+                      title: Text('View Contacts'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        // Navigate to LeadsPage
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ContactsScreen()),
                         );
                       },
                     ),
