@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_crm/utils/general/secure_storage.dart';
+import 'package:new_crm/view/account/screens/new_account_screen.dart';
 import 'package:new_crm/view/auth/login_screen.dart';
 import 'package:new_crm/view/contact/screens/contact_screen.dart';
 import 'package:new_crm/view/contact/screens/new_contact_screen.dart';
@@ -183,8 +184,10 @@ class MainMenuDrawer extends StatelessWidget {
                       title: Text('New Account'),
                       onTap: () {
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('New Account selected')),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NewAccountScreen()),
                         );
                       },
                     ),
