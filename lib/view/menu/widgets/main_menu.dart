@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_crm/utils/general/secure_storage.dart';
 import 'package:new_crm/view/account/screens/new_account_screen.dart';
+import 'package:new_crm/view/account/screens/view_accounts.dart';
 import 'package:new_crm/view/auth/login_screen.dart';
 import 'package:new_crm/view/contact/screens/contact_screen.dart';
 import 'package:new_crm/view/contact/screens/new_contact_screen.dart';
@@ -199,6 +200,17 @@ class MainMenuDrawer extends StatelessWidget {
                         Navigator.pop(context);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Export selected')),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      title: Text('View Accounts'), // New option added here
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewAccountsScreen()),
                         );
                       },
                     ),

@@ -21,7 +21,8 @@ class _ContactsScreenState extends State<ContactsScreen> {
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
       List<dynamic> contacts = data['Contacts'] ?? [];
-      return contacts.cast<Map<String, dynamic>>(); // Cast to List<Map<String, dynamic>>
+      return contacts
+          .cast<Map<String, dynamic>>(); // Cast to List<Map<String, dynamic>>
     } else {
       throw Exception('Failed to load contacts');
     }
@@ -65,7 +66,8 @@ class _ContactsScreenState extends State<ContactsScreen> {
                 ),
                 child: ListTile(
                   title: Text(
-                    '${contact['salutation']} ${contact['first_name']} ${contact['last_name']}' ?? '',
+                    '${contact['salutation']} ${contact['first_name']} ${contact['last_name']}' ??
+                        '',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 18),
                   ),
@@ -79,7 +81,8 @@ class _ContactsScreenState extends State<ContactsScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ContactDetailsScreen(
-                          contactId: contact['id'].toString(), // Pass contact ID
+                          contactId:
+                              contact['id'].toString(), // Pass contact ID
                         ),
                       ),
                     );
@@ -178,10 +181,10 @@ class ContactDetailsScreen extends StatelessWidget {
                           const SizedBox(height: 8),
                           Row(
                             children: [
-                              const Icon(Icons.apartment,
-                                  color: Colors.orange),
+                              const Icon(Icons.apartment, color: Colors.orange),
                               const SizedBox(width: 8),
-                              Text('Department: ${contact['department'] ?? 'N/A'}'),
+                              Text(
+                                  'Department: ${contact['department'] ?? 'N/A'}'),
                             ],
                           ),
                         ],
@@ -230,7 +233,8 @@ class DetailsTab extends StatelessWidget {
           'Contact Information',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        Text('Name: ${contactDetails['first_name']} ${contactDetails['last_name']}'),
+        Text(
+            'Name: ${contactDetails['first_name']} ${contactDetails['last_name']}'),
         Text('Company Name: ${contactDetails['company_name']}'),
         Text('Date of Birth: ${contactDetails['date_of_birth']}'),
         Text('Mobile: ${contactDetails['mobile']}'),
