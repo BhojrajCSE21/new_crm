@@ -79,7 +79,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ContactDetailsScreen(
-                          contactId: contact['id'], // Pass contact ID
+                          contactId: contact['id'].toString(), // Pass contact ID
                         ),
                       ),
                     );
@@ -95,12 +95,12 @@ class _ContactsScreenState extends State<ContactsScreen> {
 }
 
 class ContactDetailsScreen extends StatelessWidget {
-  final int contactId;
+  final String contactId;
 
   const ContactDetailsScreen({super.key, required this.contactId});
 
   Future<Map<String, dynamic>> _fetchContactDetails() async {
-    final url = '${AppUrls.contactUrl}$contactId/'; // Ensure endpoint is correct
+    final url = AppUrls.individualContactUrl(contactId); // Fetch dynamic URL
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       return jsonDecode(response.body) as Map<String, dynamic>;
@@ -201,9 +201,9 @@ class ContactDetailsScreen extends StatelessWidget {
                 Expanded(
                   child: TabBarView(
                     children: [
-                      const ActivitiesTab(),
+                      const ActivitiesTab(), // Call ActivitiesTab
                       DetailsTab(contactDetails: contact),
-                      const ConnectionsTab(),
+                      const ConnectionsTab(), // Call ConnectionsTab
                     ],
                   ),
                 ),
@@ -233,20 +233,16 @@ class DetailsTab extends StatelessWidget {
         Text('Name: ${contactDetails['first_name']} ${contactDetails['last_name']}'),
         Text('Company Name: ${contactDetails['company_name']}'),
         Text('Date of Birth: ${contactDetails['date_of_birth']}'),
-        Text('Fax: ${contactDetails['fax']}'),
         Text('Mobile: ${contactDetails['mobile']}'),
         Text('Email: ${contactDetails['email']}'),
         Text('Website: ${contactDetails['website']}'),
-        Text('Title: ${contactDetails['title']}'),
         Text('Department: ${contactDetails['department']}'),
-        Text('Account Name: ${contactDetails['account_name']}'),
         const SizedBox(height: 16),
         const Text(
           'Address Information',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        Text('Mailing Address: ${contactDetails['mailing_street']}, ${contactDetails['mailing_city']}, ${contactDetails['mailing_zip_code']}, ${contactDetails['mailing_state']}, ${contactDetails['mailing_country']}'),
-        Text('Other Address: ${contactDetails['other_street']}, ${contactDetails['other_city']}, ${contactDetails['other_zip_code']}, ${contactDetails['other_state']}, ${contactDetails['other_country']}'),
+        Text('Mailing Address: ${contactDetails['mailing_street']}'),
         const SizedBox(height: 16),
         const Text(
           'Description Information',
