@@ -10,6 +10,6 @@ class AppUrls {
   }
 
   static String individualAccountUrl(String accountId) {
-    return '$baseUrl/user/admin/accounts/$accountId/';
+    return '${baseUrl}/user/admin/accounts/$accountId/';
   }
 }
