@@ -17,13 +17,21 @@ class _ViewAccountsScreenState extends State<ViewAccountsScreen> {
   late Future<List<Map<String, dynamic>>> _accountsFuture;
 
   Future<List<Map<String, dynamic>>> _fetchAccounts() async {
-    final response = await http.get(Uri.parse(AppUrls.accountUrl));
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      List<dynamic> accounts = data['Contacts'] ?? [];
-      return accounts.cast<Map<String, dynamic>>(); // Cast to List<Map<String, dynamic>>
-    } else {
-      throw Exception('Failed to load accounts');
+    try {
+      final response = await http.get(Uri.parse(AppUrls.accountUrl));
+      print('Fetching accounts from: ${AppUrls.accountUrl}');
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print('Response data: $data');
+        List<dynamic> accounts = data['Contacts'] ?? [];
+        return accounts.cast<Map<String, dynamic>>();
+      } else {
+        print('Error: Failed to load accounts. Status code: ${response.statusCode}');
+        throw Exception('Failed to load accounts');
+      }
+    } catch (e) {
+      print('Exception: $e');
+      throw Exception('Error fetching accounts: $e');
     }
   }
 
@@ -94,18 +102,28 @@ class _ViewAccountsScreenState extends State<ViewAccountsScreen> {
   }
 }
 
+
 class AccountDetailsScreen extends StatelessWidget {
   final String accountId;
 
   const AccountDetailsScreen({super.key, required this.accountId});
 
   Future<Map<String, dynamic>> _fetchAccountDetails() async {
-    final url = AppUrls.individualAccountUrl(accountId); // Fetch dynamic URL
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body) as Map<String, dynamic>;
-    } else {
-      throw Exception('Failed to load account details');
+    final url = AppUrls.individualAccountUrl(accountId);
+    print('Fetching account details from: $url');
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print('Account details: $data');
+        return data as Map<String, dynamic>;
+      } else {
+        print('Error: Failed to load account details. Status code: ${response.statusCode}');
+        throw Exception('Failed to load account details');
+      }
+    } catch (e) {
+      print('Exception: $e');
+      throw Exception('Error fetching account details: $e');
     }
   }
 
@@ -136,59 +154,20 @@ class AccountDetailsScreen extends StatelessWidget {
             ),
             body: Column(
               children: [
-                // Account Information Header
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Account Owner: ${account['account_owner'] ?? 'N/A'}',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blue.shade800,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              const Icon(Icons.business, color: Colors.blue),
-                              const SizedBox(width: 8),
-                              Text('Industry: ${account['industry'] ?? 'N/A'}'),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              const Icon(Icons.phone, color: Colors.green),
-                              const SizedBox(width: 8),
-                              Text('Phone: ${account['phone'] ?? 'N/A'}'),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              const Icon(Icons.language, color: Colors.orange),
-                              const SizedBox(width: 8),
-                              Text('Website: ${account['website'] ?? 'N/A'}'),
-                            ],
-                          ),
-                        ],
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Account Owner: ${account['account_owner'] ?? 'N/A'}'),
+                        Text('Industry: ${account['industry'] ?? 'N/A'}'),
+                        Text('Phone: ${account['phone'] ?? 'N/A'}'),
+                      ],
                     ),
                   ),
                 ),
                 const TabBar(
-                  indicatorColor: Colors.blue,
-                  indicatorWeight: 4,
                   tabs: [
                     Tab(text: 'Activities'),
                     Tab(text: 'Details'),
@@ -198,9 +177,9 @@ class AccountDetailsScreen extends StatelessWidget {
                 Expanded(
                   child: TabBarView(
                     children: [
-                      const ActivitiesTab(), // Call ActivitiesTab
-                      AccountDetailsTab(accountDetails: account),
-                      const ConnectionsTab(), // Call ConnectionsTab
+                      const ActivitiesTab(),
+                      const Text('Details'),
+                      const ConnectionsTab(),
                     ],
                   ),
                 ),
@@ -209,35 +188,6 @@ class AccountDetailsScreen extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class AccountDetailsTab extends StatelessWidget {
-  final Map<String, dynamic> accountDetails;
-
-  const AccountDetailsTab({super.key, required this.accountDetails});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(8.0),
-      children: [
-        const Text(
-          'Account Information',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        Text('Account Name: ${accountDetails['account_name']}'),
-        Text('Industry: ${accountDetails['industry']}'),
-        Text('Phone: ${accountDetails['phone']}'),
-        Text('Website: ${accountDetails['website']}'),
-        const SizedBox(height: 16),
-        const Text(
-          'Description Information',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        Text('Description: ${accountDetails['description']}'),
-      ],
     );
   }
 }

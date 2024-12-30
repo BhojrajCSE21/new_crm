@@ -6,10 +6,11 @@ class AppUrls {
 
   // Method to generate URL for individual contact
   static String individualContactUrl(String contactId) {
-    return '${baseUrl}/contact/$contactId/';
+    return '$baseUrl/contact/$contactId/';
   }
 
+  // Updated method to generate URL for individual account
   static String individualAccountUrl(String accountId) {
-    return '${baseUrl}/user/admin/accounts/$accountId/';
+    return '$baseUrl/user/admin/accounts/$accountId/';
   }
 }

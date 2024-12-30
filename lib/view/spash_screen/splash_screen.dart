@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_crm/utils/general/secure_storage.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -37,7 +36,8 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        color: const Color.fromARGB(255, 252, 252, 252), // Background color for the splash screen
+        color: const Color.fromARGB(
+            255, 252, 252, 252), // Background color for the splash screen
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -60,7 +60,8 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 20),
             // Loading indicator
             const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 27, 133, 253)),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  Color.fromARGB(255, 27, 133, 253)),
             ),
           ],
         ),
