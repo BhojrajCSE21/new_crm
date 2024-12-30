@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 20),
             // Display the app name or title
             const Text(
-              "Micronet CRM",
+              "Micro CRM",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
