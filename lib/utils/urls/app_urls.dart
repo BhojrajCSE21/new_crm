@@ -8,4 +8,8 @@ class AppUrls {
   static String individualContactUrl(String contactId) {
     return '${baseUrl}/contact/$contactId/';
   }
+
+  static String individualAccountUrl(String accountId) {
+    return '$baseUrl/user/admin/accounts/$accountId/';
+  }
 }
