@@ -3,7 +3,7 @@ import 'package:new_crm/models/account/account_model.dart';
 import 'package:new_crm/view_models/account/account_view_model.dart';
 
 class NewAccountScreen extends StatefulWidget {
-  const NewAccountScreen({Key? key}) : super(key: key);
+  const NewAccountScreen({super.key});
 
   @override
   _NewAccountScreenState createState() => _NewAccountScreenState();

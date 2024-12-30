@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_crm/view/menu/widgets/main_menu.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +11,7 @@ class HomePage extends StatelessWidget {
         title: Row(
           children: [
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: 40, // Reduced height for the search bar
                 child: TextField(
                   decoration: InputDecoration(

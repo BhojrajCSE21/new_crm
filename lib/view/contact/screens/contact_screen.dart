@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ContactsScreen extends StatelessWidget {
-  const ContactsScreen({Key? key}) : super(key: key);
+  const ContactsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class ContactsScreen extends StatelessWidget {
 class ContactDetailsScreen extends StatelessWidget {
   final String? contactName;
 
-  const ContactDetailsScreen({Key? key, required this.contactName}) : super(key: key);
+  const ContactDetailsScreen({super.key, required this.contactName});
 
   @override
   Widget build(BuildContext context) {
@@ -163,6 +163,8 @@ class ContactDetailsScreen extends StatelessWidget {
 }
 
 class ActivitiesTab extends StatelessWidget {
+  const ActivitiesTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -194,6 +196,8 @@ class ActivitiesTab extends StatelessWidget {
 }
 
 class DetailsTab extends StatelessWidget {
+  const DetailsTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -224,6 +228,8 @@ class DetailsTab extends StatelessWidget {
 }
 
 class ConnectionsTab extends StatelessWidget {
+  const ConnectionsTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(

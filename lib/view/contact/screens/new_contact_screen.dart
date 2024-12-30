@@ -3,7 +3,7 @@ import 'package:new_crm/models/contact/contact_model.dart';
 import 'package:new_crm/view_models/contact/contact_view_model.dart';
 
 class NewContactScreen extends StatefulWidget {
-  const NewContactScreen({Key? key}) : super(key: key);
+  const NewContactScreen({super.key});
 
   @override
   _NewContactScreenState createState() => _NewContactScreenState();

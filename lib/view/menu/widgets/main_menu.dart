@@ -8,7 +8,9 @@ import 'package:new_crm/view/leads/screens/lead.dart';
 
 class MainMenuDrawer extends StatelessWidget {
   final SecureStorage _secureStorage =
-      SecureStorage(); // Instance for secure storage
+      SecureStorage();
+
+  MainMenuDrawer({super.key}); // Instance for secure storage
   @override
   Widget build(BuildContext context) {
     return Drawer(

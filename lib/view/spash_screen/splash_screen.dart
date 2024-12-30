@@ -3,6 +3,8 @@ import 'package:new_crm/utils/general/secure_storage.dart';
 
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }

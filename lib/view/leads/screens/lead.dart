@@ -5,6 +5,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,6 +24,10 @@ class LeadsPage extends StatelessWidget {
     {'name': 'John Doe', 'company': 'Tech Co.'},
     {'name': 'Sara Smith', 'company': 'InnovateX'},
   ];
+
+  // Remove 'const' from constructor declaration
+  LeadsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,8 +81,7 @@ class LeadsPage extends StatelessWidget {
                     contentPadding: EdgeInsets.all(16),
                     title: Text(
                       leads[index]['name']!,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
                       leads[index]['company']!,
@@ -84,7 +89,6 @@ class LeadsPage extends StatelessWidget {
                     ),
                     trailing: Icon(Icons.chevron_right),
                     onTap: () {
-                      // Handle onTap action if needed
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Tapped on ${leads[index]['name']}'),
