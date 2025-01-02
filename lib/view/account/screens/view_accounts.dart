@@ -16,15 +16,12 @@ class ViewAccountsScreen extends StatefulWidget {
 class _ViewAccountsScreenState extends State<ViewAccountsScreen> {
   late Future<List<Map<String, dynamic>>> _accountsFuture;
 
-  // Fetch accounts data from the API
   Future<List<Map<String, dynamic>>> _fetchAccounts() async {
     try {
       final response = await http.get(Uri.parse(AppUrls.accountUrl));
-      print('Fetching accounts from: ${AppUrls.accountUrl}');
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print('Response data: $data');
-        List<dynamic> accounts = data['Contacts'] ?? []; // Adjust key to match API response
+        List<dynamic> accounts = data['Contacts'] ?? [];
         return accounts.cast<Map<String, dynamic>>();
       } else {
         throw Exception('Failed to load accounts');
@@ -63,7 +60,7 @@ class _ViewAccountsScreenState extends State<ViewAccountsScreen> {
           return RefreshIndicator(
             onRefresh: () async {
               setState(() {
-                _accountsFuture = _fetchAccounts(); // Refresh the data
+                _accountsFuture = _fetchAccounts();
               });
             },
             child: ListView.builder(
@@ -72,7 +69,8 @@ class _ViewAccountsScreenState extends State<ViewAccountsScreen> {
                 final account = accounts[index];
                 return Card(
                   elevation: 5,
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -92,6 +90,7 @@ class _ViewAccountsScreenState extends State<ViewAccountsScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => AccountDetailsScreen(
+                            username: 'admin', // Replace with actual username
                             accountId: account['id'].toString(),
                           ),
                         ),
@@ -109,17 +108,17 @@ class _ViewAccountsScreenState extends State<ViewAccountsScreen> {
 }
 
 class AccountDetailsScreen extends StatelessWidget {
+  final String username;
   final String accountId;
 
-  const AccountDetailsScreen({super.key, required this.accountId});
+  const AccountDetailsScreen(
+      {super.key, required this.username, required this.accountId});
 
   Future<Map<String, dynamic>> _fetchAccountDetails() async {
-    final url = AppUrls.individualAccountUrl(accountId);
-    print('Fetching account details from URL: $url');
+    final url = AppUrls.individualAccountUrl(username, accountId);
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        print('Response: ${response.body}');
         return jsonDecode(response.body) as Map<String, dynamic>;
       } else {
         throw Exception('Failed to load account details');
@@ -158,29 +157,72 @@ class AccountDetailsScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Card(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Account Owner: ${account['account_owner'] ?? 'N/A'}',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            'Industry: ${account['industry'] ?? 'N/A'}',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            'Phone: ${account['phone'] ?? 'N/A'}',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ],
+                  child: SizedBox(
+                    width: 400, // Set your desired width here
+                    child: Card(
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(Icons.account_circle,
+                                    color: Colors.blue),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    'Account Owner: ${account['account_owner'] ?? 'N/A'}',
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Icon(Icons.business, color: Colors.green),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    'Industry: ${account['industry'] ?? 'N/A'}',
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Icon(Icons.phone, color: Colors.orange),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    'Phone: ${account['phone'] ?? 'N/A'}',
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Icon(Icons.link, color: Colors.purple),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    'Website: ${account['website'] ?? 'N/A'}',
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -201,11 +243,69 @@ class AccountDetailsScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Account Number: ${account['account_number'] ?? 'N/A'}',
-                              style: const TextStyle(fontSize: 16),
+                            const Text(
+                              'Account Information',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
                             ),
-                            // Add more details as needed
+                            Text(
+                                'Parent Account: ${account['parent_account'] ?? 'N/A'}'),
+                            Text(
+                                'Account Number: ${account['account_number'] ?? 'N/A'}'),
+                            Text(
+                                'Account Site: ${account['account_site'] ?? 'N/A'}'),
+                            Text('Fax: ${account['fax'] ?? 'N/A'}'),
+                            Text('Mobile: ${account['mobile'] ?? 'N/A'}'),
+                            Text('Email: ${account['email'] ?? 'N/A'}'),
+                            Text('Website: ${account['website'] ?? 'N/A'}'),
+                            Text(
+                                'Account Type: ${account['account_type'] ?? 'N/A'}'),
+                            Text('Industry: ${account['industry'] ?? 'N/A'}'),
+                            Text(
+                                'Annual Revenue: ${account['annual_revenue'] ?? 'N/A'}'),
+                            Text('Rating: ${account['rating'] ?? 'N/A'}'),
+                            Text(
+                                'Ticker Symbol: ${account['ticker_symbol'] ?? 'N/A'}'),
+                            Text('Ownership: ${account['ownership'] ?? 'N/A'}'),
+                            Text('Employees: ${account['employees'] ?? 'N/A'}'),
+                            Text('SIC Code: ${account['sic_code'] ?? 'N/A'}'),
+                            const SizedBox(height: 16),
+                            const Text(
+                              'Address Information',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                            const Text('Billing Address'),
+                            Text(
+                                'Billing Street: ${account['billing_street'] ?? 'N/A'}'),
+                            Text(
+                                'Billing City: ${account['billing_city'] ?? 'N/A'}'),
+                            Text(
+                                'Billing Zip Code: ${account['billing_zip_code'] ?? 'N/A'}'),
+                            Text(
+                                'Billing State: ${account['billing_state'] ?? 'N/A'}'),
+                            Text(
+                                'Billing Country: ${account['billing_country'] ?? 'N/A'}'),
+                            const SizedBox(height: 16),
+                            const Text('Shipping Address'),
+                            Text(
+                                'Shipping Street: ${account['shipping_street'] ?? 'N/A'}'),
+                            Text(
+                                'Shipping City: ${account['shipping_city'] ?? 'N/A'}'),
+                            Text(
+                                'Shipping Zip Code: ${account['shipping_zip_code'] ?? 'N/A'}'),
+                            Text(
+                                'Shipping State: ${account['shipping_state'] ?? 'N/A'}'),
+                            Text(
+                                'Shipping Country: ${account['shipping_country'] ?? 'N/A'}'),
+                            const SizedBox(height: 16),
+                            const Text(
+                              'Description Information',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                            Text(
+                                'Description: ${account['description'] ?? 'N/A'}'),
                           ],
                         ),
                       ),

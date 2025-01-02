@@ -55,9 +55,6 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Activities Tab'),
-      ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
         children: [
