@@ -231,6 +231,10 @@ class _ConnectionsTabState extends State<ConnectionsTab> {
               child: const Text('Cancel'),
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
+                foregroundColor: Colors.white,
+              ),
               onPressed: () {
                 // Add save logic here
                 Navigator.pop(context); // Close the dialog
@@ -251,6 +255,10 @@ class _ConnectionsTabState extends State<ConnectionsTab> {
         ListTile(
           title: const Text('Opportunity'),
           trailing: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
+              foregroundColor: Colors.white,
+            ),
             onPressed: _showNewOpportunityForm,
             child: const Text('New'),
           ),
@@ -258,6 +266,10 @@ class _ConnectionsTabState extends State<ConnectionsTab> {
         ListTile(
           title: const Text('Campaigns'),
           trailing: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
+              foregroundColor: Colors.white,
+            ),
             onPressed: () {},
             child: const Text('Add Campaign'),
           ),
@@ -265,6 +277,10 @@ class _ConnectionsTabState extends State<ConnectionsTab> {
         ListTile(
           title: const Text('Attachments & Notes'),
           trailing: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
+              foregroundColor: Colors.white,
+            ),
             onPressed: () {},
             child: const Text('Upload Files'),
           ),

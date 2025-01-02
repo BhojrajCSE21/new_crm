@@ -83,11 +83,17 @@ class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
         children: [
           Expanded(
             child: FilledButton.tonal(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(Colors.blue), // Blue background for the button
+              ),
               onPressed: () {},
               child: ValueListenableBuilder<DateTimeRange>(
                 valueListenable: calendarController.visibleDateTimeRange,
                 builder: (context, value, child) {
-                  return Text('${value.start.monthNameEnglish} ${value.start.year}');
+                  return Text(
+                    '${value.start.monthNameEnglish} ${value.start.year}',
+                    style: const TextStyle(color: Colors.white), // White text for better contrast
+                  );
                 },
               ),
             ),
@@ -121,9 +127,27 @@ class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
   TileComponents _tileComponents() {
     return TileComponents(
       tileBuilder: (event, tileRange) {
+        Color tileColor;
+
+        // Set colors for events
+        if (event.data == "Sample Event 1") {
+          tileColor = Colors.green;
+        } else if (event.data == "Sample Event 2") {
+          tileColor = Colors.red;
+        } else {
+          tileColor = const Color.fromARGB(255, 0, 255, 76); // Default green color
+        }
+
+        // Highlight today's date
+        if (tileRange.start.day == now.day &&
+            tileRange.start.month == now.month &&
+            tileRange.start.year == now.year) {
+          tileColor = Colors.blue; // Blue for today's date
+        }
+
         return Card(
           margin: EdgeInsets.zero,
-          color: Colors.blueAccent,
+          color: tileColor,
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(

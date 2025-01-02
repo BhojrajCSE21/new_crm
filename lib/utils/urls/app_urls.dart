@@ -5,7 +5,7 @@ class AppUrls {
   static var contactUrl = "$baseUrl/user/admin/contacts/";
   static var accountUrl = "$baseUrl/user/admin/accounts/";
 
-  // Method to generate URL for individual contact   
+  // Method to generate URL for individual contact
   static String individualContactUrl(String contactId) {
     return '$baseUrl/contact/$contactId/';
   }

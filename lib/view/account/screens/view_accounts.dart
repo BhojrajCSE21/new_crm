@@ -158,14 +158,14 @@ class AccountDetailsScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: SizedBox(
-                    width: 400, // Set your desired width here
+                    width: 400,
                     child: Card(
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(12.0), // Reduced padding
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -177,12 +177,12 @@ class AccountDetailsScreen extends StatelessWidget {
                                 Expanded(
                                   child: Text(
                                     'Account Owner: ${account['account_owner'] ?? 'N/A'}',
-                                    style: const TextStyle(fontSize: 16),
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 6), // Reduced spacing
                             Row(
                               children: [
                                 const Icon(Icons.business, color: Colors.green),
@@ -190,12 +190,12 @@ class AccountDetailsScreen extends StatelessWidget {
                                 Expanded(
                                   child: Text(
                                     'Industry: ${account['industry'] ?? 'N/A'}',
-                                    style: const TextStyle(fontSize: 16),
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 6),
                             Row(
                               children: [
                                 const Icon(Icons.phone, color: Colors.orange),
@@ -203,12 +203,12 @@ class AccountDetailsScreen extends StatelessWidget {
                                 Expanded(
                                   child: Text(
                                     'Phone: ${account['phone'] ?? 'N/A'}',
-                                    style: const TextStyle(fontSize: 16),
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 6),
                             Row(
                               children: [
                                 const Icon(Icons.link, color: Colors.purple),
@@ -216,7 +216,7 @@ class AccountDetailsScreen extends StatelessWidget {
                                 Expanded(
                                   child: Text(
                                     'Website: ${account['website'] ?? 'N/A'}',
-                                    style: const TextStyle(fontSize: 16),
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                 ),
                               ],
