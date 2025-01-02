@@ -5,11 +5,10 @@ import 'package:new_crm/view/account/screens/view_accounts.dart';
 import 'package:new_crm/view/auth/login_screen.dart';
 import 'package:new_crm/view/contact/screens/contact_screen.dart';
 import 'package:new_crm/view/contact/screens/new_contact_screen.dart';
-import 'package:new_crm/view/leads/screens/lead.dart';
+import 'package:new_crm/view/leads/screens/new_lead_screen.dart';
 
 class MainMenuDrawer extends StatelessWidget {
-  final SecureStorage _secureStorage =
-      SecureStorage();
+  final SecureStorage _secureStorage = SecureStorage();
 
   MainMenuDrawer({super.key}); // Instance for secure storage
   @override
@@ -78,10 +77,13 @@ class MainMenuDrawer extends StatelessWidget {
                   children: [
                     ListTile(
                       title: Text('New Leads'),
-                      onTap: () {
+                     onTap: () {
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('New Leads selected')),
+                        // Navigate to LeadsPage
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NewLeadView()),
                         );
                       },
                     ),
@@ -106,14 +108,7 @@ class MainMenuDrawer extends StatelessWidget {
                     // Navigate to LeadsPage when tapped on Leads option
                     ListTile(
                       title: Text('View Leads'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        // Navigate to LeadsPage
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => LeadsPage()),
-                        );
-                      },
+                      
                     ),
                   ],
                 ),

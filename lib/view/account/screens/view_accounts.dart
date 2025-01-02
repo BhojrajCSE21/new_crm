@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:convert'; // For JSON decoding
-import 'package:http/http.dart' as http; // For HTTP requests
-import 'package:flutter_spinkit/flutter_spinkit.dart'; // For a loading spinner
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:new_crm/utils/urls/app_urls.dart';
 import 'package:new_crm/view/contact/widgets/activities_tab.dart';
 import 'package:new_crm/view/contact/widgets/connection_tab.dart';
@@ -16,6 +16,7 @@ class ViewAccountsScreen extends StatefulWidget {
 class _ViewAccountsScreenState extends State<ViewAccountsScreen> {
   late Future<List<Map<String, dynamic>>> _accountsFuture;
 
+  // Fetch accounts data from the API
   Future<List<Map<String, dynamic>>> _fetchAccounts() async {
     try {
       final response = await http.get(Uri.parse(AppUrls.accountUrl));
@@ -23,14 +24,12 @@ class _ViewAccountsScreenState extends State<ViewAccountsScreen> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         print('Response data: $data');
-        List<dynamic> accounts = data['Contacts'] ?? [];
+        List<dynamic> accounts = data['Contacts'] ?? []; // Adjust key to match API response
         return accounts.cast<Map<String, dynamic>>();
       } else {
-        print('Error: Failed to load accounts. Status code: ${response.statusCode}');
         throw Exception('Failed to load accounts');
       }
     } catch (e) {
-      print('Exception: $e');
       throw Exception('Error fetching accounts: $e');
     }
   }
@@ -61,47 +60,53 @@ class _ViewAccountsScreenState extends State<ViewAccountsScreen> {
           }
 
           final accounts = snapshot.data!;
-          return ListView.builder(
-            itemCount: accounts.length,
-            itemBuilder: (context, index) {
-              final account = accounts[index];
-              return Card(
-                elevation: 5,
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: ListTile(
-                  title: Text(
-                    account['account_name'] ?? '',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  subtitle: Text(
-                    account['industry'] ?? '',
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
-                  ),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 18),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AccountDetailsScreen(
-                          accountId: account['id'].toString(),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              );
+          return RefreshIndicator(
+            onRefresh: () async {
+              setState(() {
+                _accountsFuture = _fetchAccounts(); // Refresh the data
+              });
             },
+            child: ListView.builder(
+              itemCount: accounts.length,
+              itemBuilder: (context, index) {
+                final account = accounts[index];
+                return Card(
+                  elevation: 5,
+                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ListTile(
+                    title: Text(
+                      account['account_name'] ?? '',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    subtitle: Text(
+                      account['industry'] ?? '',
+                      style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AccountDetailsScreen(
+                            accountId: account['id'].toString(),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
           );
         },
       ),
     );
   }
 }
-
 
 class AccountDetailsScreen extends StatelessWidget {
   final String accountId;
@@ -110,19 +115,16 @@ class AccountDetailsScreen extends StatelessWidget {
 
   Future<Map<String, dynamic>> _fetchAccountDetails() async {
     final url = AppUrls.individualAccountUrl(accountId);
-    print('Fetching account details from: $url');
+    print('Fetching account details from URL: $url');
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        print('Account details: $data');
-        return data as Map<String, dynamic>;
+        print('Response: ${response.body}');
+        return jsonDecode(response.body) as Map<String, dynamic>;
       } else {
-        print('Error: Failed to load account details. Status code: ${response.statusCode}');
         throw Exception('Failed to load account details');
       }
     } catch (e) {
-      print('Exception: $e');
       throw Exception('Error fetching account details: $e');
     }
   }
@@ -157,13 +159,29 @@ class AccountDetailsScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Account Owner: ${account['account_owner'] ?? 'N/A'}'),
-                        Text('Industry: ${account['industry'] ?? 'N/A'}'),
-                        Text('Phone: ${account['phone'] ?? 'N/A'}'),
-                      ],
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Account Owner: ${account['account_owner'] ?? 'N/A'}',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            'Industry: ${account['industry'] ?? 'N/A'}',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            'Phone: ${account['phone'] ?? 'N/A'}',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -178,7 +196,19 @@ class AccountDetailsScreen extends StatelessWidget {
                   child: TabBarView(
                     children: [
                       const ActivitiesTab(),
-                      const Text('Details'),
+                      SingleChildScrollView(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Account Number: ${account['account_number'] ?? 'N/A'}',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            // Add more details as needed
+                          ],
+                        ),
+                      ),
                       const ConnectionsTab(),
                     ],
                   ),

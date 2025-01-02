@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_crm/view/menu/widgets/main_menu.dart';
+import 'package:new_crm/view/dashboard/widgets/calendar_widget.dart';
+import 'package:new_crm/view/menu/widgets/main_menu.dart'; // Import the MainMenuDrawer
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -8,109 +9,52 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // Search bar
             Expanded(
-              child: SizedBox(
-                height: 40, // Reduced height for the search bar
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search...',
-                    contentPadding: EdgeInsets.symmetric(
-                        vertical: 10), // Center text vertically
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
+              child: TextField(
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 2),
+                  hintText: 'Search...',
+                  hintStyle: const TextStyle(color: Color.fromARGB(179, 12, 12, 12)),
+                  prefixIcon: const Icon(Icons.search, color: Color.fromARGB(255, 14, 13, 13)),
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 253, 253, 253),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: BorderSide.none,
                   ),
+                ),
+                style: const TextStyle(color: Color.fromARGB(255, 14, 13, 13)),
+              ),
+            ),
+            const SizedBox(width: 10),
+            // Profile icon
+            GestureDetector(
+              onTap: () {
+                // Action when profile icon is tapped
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Profile tapped')),
+                );
+              },
+              child: const CircleAvatar(
+                radius: 20,
+                backgroundColor: Colors.white,
+                child: Icon(
+                  Icons.person,
+                  color: Colors.blueAccent,
+                  size: 24,
                 ),
               ),
             ),
-            SizedBox(width: 10), // Space between search bar and profile icon
-            Container(
-              height: 40,
-              width: 40, // Smaller size for the profile icon circle
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white, // White circle for the profile icon
-              ),
-              child: IconButton(
-                icon: Icon(Icons.account_circle),
-                onPressed: () {
-                  // Handle profile icon tap
-                },
-              ),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.blue,
-      ),
-      drawer: MainMenuDrawer(), // Use the MainMenuDrawer from main_menu.dart
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          children: [
-            _buildDashboardTile(
-              context,
-              icon: Icons.dashboard,
-              label: 'Dashboard',
-              color: Colors.orange,
-            ),
-            _buildDashboardTile(
-              context,
-              icon: Icons.leaderboard,
-              label: 'Leads',
-              color: Colors.green,
-            ),
-            _buildDashboardTile(
-              context,
-              icon: Icons.contacts,
-              label: 'Contacts',
-              color: Colors.blue,
-            ),
-            _buildDashboardTile(
-              context,
-              icon: Icons.account_circle,
-              label: 'Accounts',
-              color: Colors.purple,
-            ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildDashboardTile(BuildContext context,
-      {required IconData icon, required String label, required Color color}) {
-    return GestureDetector(
-      onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('$label tapped')),
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 40, color: Colors.white),
-            SizedBox(height: 10),
-            Text(
-              label,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-          ],
-        ),
-      ),
+      drawer: MainMenuDrawer(), // Add the drawer
+      body: const CustomCalendarWidget(),
     );
   }
 }

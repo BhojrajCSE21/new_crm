@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:calendar_view/calendar_view.dart';
 import 'package:new_crm/view/auth/login_screen.dart';
 import 'package:new_crm/view/dashboard/screens/home_view.dart';
 import 'package:new_crm/view/spash_screen/splash_screen.dart';
@@ -18,17 +19,20 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => LoginViewModel()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'CRM App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+      child: CalendarControllerProvider(
+        controller: EventController(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'CRM App',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: SplashScreen(),
+          routes: {
+            '/login': (context) => LoginScreen(),
+            '/home': (context) => HomePage(),
+          },
         ),
-        home: SplashScreen(),
-        routes: {
-          '/login': (context) => LoginScreen(),
-          '/home': (context) => HomePage(),
-        },
       ),
     );
   }

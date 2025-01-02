@@ -17,24 +17,34 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   // Controllers for text fields
   final TextEditingController _accountOwnerController = TextEditingController();
   final TextEditingController _accountNameController = TextEditingController();
-  final TextEditingController _accountNumberController = TextEditingController();
+  final TextEditingController _accountNumberController =
+      TextEditingController();
   final TextEditingController _accountSiteController = TextEditingController();
-  final TextEditingController _parentAccountController = TextEditingController();
+  final TextEditingController _parentAccountController =
+      TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _faxController = TextEditingController();
   final TextEditingController _websiteController = TextEditingController();
-  final TextEditingController _annualRevenueController = TextEditingController();
+  final TextEditingController _annualRevenueController =
+      TextEditingController();
   final TextEditingController _tickerSymbolController = TextEditingController();
-  final TextEditingController _billingStreetController = TextEditingController();
+  final TextEditingController _billingStreetController =
+      TextEditingController();
   final TextEditingController _billingCityController = TextEditingController();
-  final TextEditingController _billingZipCodeController = TextEditingController();
+  final TextEditingController _billingZipCodeController =
+      TextEditingController();
   final TextEditingController _billingStateController = TextEditingController();
-  final TextEditingController _billingCountryController = TextEditingController();
-  final TextEditingController _shippingStreetController = TextEditingController();
+  final TextEditingController _billingCountryController =
+      TextEditingController();
+  final TextEditingController _shippingStreetController =
+      TextEditingController();
   final TextEditingController _shippingCityController = TextEditingController();
-  final TextEditingController _shippingZipCodeController = TextEditingController();
-  final TextEditingController _shippingStateController = TextEditingController();
-  final TextEditingController _shippingCountryController = TextEditingController();
+  final TextEditingController _shippingZipCodeController =
+      TextEditingController();
+  final TextEditingController _shippingStateController =
+      TextEditingController();
+  final TextEditingController _shippingCountryController =
+      TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _sicCodeController = TextEditingController();
   final TextEditingController _ratingController = TextEditingController();
@@ -159,16 +169,24 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
           child: ListView(
             children: [
               _buildSectionTitle('Account Information'),
-              _buildTextField(label: 'Account Owner', controller: _accountOwnerController),
-              _buildTextField(label: 'Account Name', controller: _accountNameController),
-              _buildTextField(label: 'Account Number', controller: _accountNumberController),
-              _buildTextField(label: 'Account Site', controller: _accountSiteController),
-              _buildTextField(label: 'Parent Account', controller: _parentAccountController),
+              _buildTextField(
+                  label: 'Account Owner', controller: _accountOwnerController),
+              _buildTextField(
+                  label: 'Account Name', controller: _accountNameController),
+              _buildTextField(
+                  label: 'Account Number',
+                  controller: _accountNumberController),
+              _buildTextField(
+                  label: 'Account Site', controller: _accountSiteController),
+              _buildTextField(
+                  label: 'Parent Account',
+                  controller: _parentAccountController),
               _buildDropdownField(
                 label: 'Account Type',
                 options: _accountTypes,
                 value: _selectedAccountType,
-                onChanged: (value) => setState(() => _selectedAccountType = value),
+                onChanged: (value) =>
+                    setState(() => _selectedAccountType = value),
               ),
               _buildDropdownField(
                 label: 'Industry',
@@ -180,36 +198,60 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
               _buildTextField(label: 'Fax', controller: _faxController),
               _buildTextField(label: 'Website', controller: _websiteController),
               _buildTextField(label: 'Rating', controller: _ratingController),
-              _buildTextField(label: 'Annual Revenue ₹', controller: _annualRevenueController),
-              _buildTextField(label: 'Ticker Symbol', controller: _tickerSymbolController),
+              _buildTextField(
+                  label: 'Annual Revenue ₹',
+                  controller: _annualRevenueController),
+              _buildTextField(
+                  label: 'Ticker Symbol', controller: _tickerSymbolController),
               _buildDropdownField(
                 label: 'Ownership',
                 options: _ownerships,
                 value: _selectedOwnership,
-                onChanged: (value) => setState(() => _selectedOwnership = value),
+                onChanged: (value) =>
+                    setState(() => _selectedOwnership = value),
               ),
               _buildDropdownField(
                 label: 'Employees',
                 options: _employees,
                 value: _selectedEmployees,
-                onChanged: (value) => setState(() => _selectedEmployees = value),
+                onChanged: (value) =>
+                    setState(() => _selectedEmployees = value),
               ),
-              _buildTextField(label: 'SIC Code', controller: _sicCodeController),
+              _buildTextField(
+                  label: 'SIC Code', controller: _sicCodeController),
               const SizedBox(height: 20),
               _buildSectionTitle('Address Information'),
-              _buildTextField(label: 'Billing Street', controller: _billingStreetController),
-              _buildTextField(label: 'Billing City', controller: _billingCityController),
-              _buildTextField(label: 'Billing Zip Code', controller: _billingZipCodeController),
-              _buildTextField(label: 'Billing State', controller: _billingStateController),
-              _buildTextField(label: 'Billing Country', controller: _billingCountryController),
-              _buildTextField(label: 'Shipping Street', controller: _shippingStreetController),
-              _buildTextField(label: 'Shipping City', controller: _shippingCityController),
-              _buildTextField(label: 'Shipping Zip Code', controller: _shippingZipCodeController),
-              _buildTextField(label: 'Shipping State', controller: _shippingStateController),
-              _buildTextField(label: 'Shipping Country', controller: _shippingCountryController),
+              _buildTextField(
+                  label: 'Billing Street',
+                  controller: _billingStreetController),
+              _buildTextField(
+                  label: 'Billing City', controller: _billingCityController),
+              _buildTextField(
+                  label: 'Billing Zip Code',
+                  controller: _billingZipCodeController),
+              _buildTextField(
+                  label: 'Billing State', controller: _billingStateController),
+              _buildTextField(
+                  label: 'Billing Country',
+                  controller: _billingCountryController),
+              _buildTextField(
+                  label: 'Shipping Street',
+                  controller: _shippingStreetController),
+              _buildTextField(
+                  label: 'Shipping City', controller: _shippingCityController),
+              _buildTextField(
+                  label: 'Shipping Zip Code',
+                  controller: _shippingZipCodeController),
+              _buildTextField(
+                  label: 'Shipping State',
+                  controller: _shippingStateController),
+              _buildTextField(
+                  label: 'Shipping Country',
+                  controller: _shippingCountryController),
               const SizedBox(height: 20),
               _buildSectionTitle('Description Information'),
-              _buildTextField(label: 'Description', controller: _descriptionController),
+              _buildTextField(
+                  label: 'Description', controller: _descriptionController),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _saveAccount,
