@@ -19,7 +19,7 @@ class MainMenuDrawer extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.blue, // Blue container color
+              color: Color.fromRGBO(29, 78, 216, 1), // Blue container color
             ),
             padding: EdgeInsets.only(
                 top: 60, bottom: 20), // Adjust the top and bottom padding here
@@ -34,7 +34,7 @@ class MainMenuDrawer extends StatelessWidget {
                   child: Icon(
                     Icons.menu,
                     size: 25,
-                    color: Colors.blue,
+                    color: Color.fromRGBO(29, 78, 216, 1),
                   ),
                 ),
                 SizedBox(width: 10), // Add spacing between the icon and text

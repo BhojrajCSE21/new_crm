@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Color.fromRGBO(29, 78, 216, 1),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
                 backgroundColor: Colors.white,
                 child: Icon(
                   Icons.person,
-                  color: Colors.blueAccent,
+                  color: Color.fromRGBO(29, 78, 216, 1),
                   size: 24,
                 ),
               ),

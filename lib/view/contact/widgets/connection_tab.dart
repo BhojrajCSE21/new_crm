@@ -232,8 +232,8 @@ class _ConnectionsTabState extends State<ConnectionsTab> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
-                foregroundColor: Colors.white,
+                backgroundColor: Colors.white,
+                foregroundColor: const Color.fromRGBO(29, 78, 216, 1),
               ),
               onPressed: () {
                 // Add save logic here
@@ -256,8 +256,8 @@ class _ConnectionsTabState extends State<ConnectionsTab> {
           title: const Text('Opportunity'),
           trailing: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
-              foregroundColor: Colors.white,
+              backgroundColor: Colors.white,
+              foregroundColor: const Color.fromRGBO(29, 78, 216, 1),
             ),
             onPressed: _showNewOpportunityForm,
             child: const Text('New'),
@@ -267,8 +267,8 @@ class _ConnectionsTabState extends State<ConnectionsTab> {
           title: const Text('Campaigns'),
           trailing: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
-              foregroundColor: Colors.white,
+              backgroundColor: Colors.white,
+              foregroundColor: const Color.fromRGBO(29, 78, 216, 1),
             ),
             onPressed: () {},
             child: const Text('Add Campaign'),
@@ -278,8 +278,8 @@ class _ConnectionsTabState extends State<ConnectionsTab> {
           title: const Text('Attachments & Notes'),
           trailing: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
-              foregroundColor: Colors.white,
+              backgroundColor: Colors.white,
+              foregroundColor: const Color.fromRGBO(29, 78, 216, 1),
             ),
             onPressed: () {},
             child: const Text('Upload Files'),

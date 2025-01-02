@@ -84,7 +84,7 @@ class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
           Expanded(
             child: FilledButton.tonal(
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Colors.blue), // Blue background for the button
+                backgroundColor: WidgetStateProperty.all(Color.fromRGBO(29, 78, 216, 1),), // Blue background for the button
               ),
               onPressed: () {},
               child: ValueListenableBuilder<DateTimeRange>(

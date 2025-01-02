@@ -61,7 +61,7 @@ class _NewContactScreenState extends State<NewContactScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("New Contact"),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Color.fromRGBO(29, 78, 216, 1),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -149,7 +149,7 @@ class _NewContactScreenState extends State<NewContactScreen> {
               ElevatedButton(
                 onPressed: _saveContact,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueAccent,
+                  backgroundColor: Color.fromRGBO(29, 78, 216, 1),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -157,7 +157,7 @@ class _NewContactScreenState extends State<NewContactScreen> {
                 ),
                 child: const Text(
                   "Save Contact",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ),
             ],

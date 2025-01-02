@@ -324,11 +324,11 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
               },
               calendarStyle: const CalendarStyle(
                 selectedDecoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Colors.red,
                   shape: BoxShape.circle,
                 ),
                 todayDecoration: BoxDecoration(
-                  color: Colors.red,
+                  color: Color.fromRGBO(29, 78, 216, 1),
                   shape: BoxShape.circle,
                 ),
               ),
