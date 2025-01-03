@@ -35,7 +35,7 @@ class _LoginViewState extends State<LoginView> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 120.0), // Adjusted bottom padding
+              padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 230.0), // Increased the bottom padding
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.85), // Semi-transparent background

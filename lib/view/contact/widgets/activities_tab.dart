@@ -69,8 +69,11 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
         children: [
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
-              foregroundColor: Colors.white,
+              backgroundColor: Colors.white,
+              side: const BorderSide(color: Color.fromRGBO(28, 78, 216, 1)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
             ),
             onPressed: () {
               _showDialog(
@@ -120,13 +123,16 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                 ],
               );
             },
-            icon: const Icon(Icons.task, color: Colors.white),
-            label: const Text('Task', style: TextStyle(color: Colors.white)),
+            icon: const Icon(Icons.task, color: Color.fromRGBO(28, 78, 216, 1)),
+            label: const Text('Task', style: TextStyle(color: Color.fromRGBO(28, 78, 216, 1))),
           ),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
-              foregroundColor: Colors.white,
+              backgroundColor: Colors.white,
+              side: const BorderSide(color: Color.fromRGBO(28, 78, 216, 1)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
             ),
             onPressed: () {
               _showDialog(
@@ -183,13 +189,16 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                 ],
               );
             },
-            icon: const Icon(Icons.meeting_room, color: Colors.white),
-            label: const Text('Meeting', style: TextStyle(color: Colors.white)),
+            icon: const Icon(Icons.meeting_room, color: Color.fromRGBO(28, 78, 216, 1)),
+            label: const Text('Meeting', style: TextStyle(color: Color.fromRGBO(28, 78, 216, 1))),
           ),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
-              foregroundColor: Colors.white,
+              backgroundColor: Colors.white,
+              side: const BorderSide(color: Color.fromRGBO(28, 78, 216, 1)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
             ),
             onPressed: () {
               _showDialog(
@@ -239,13 +248,16 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                 ],
               );
             },
-            icon: const Icon(Icons.call, color: Colors.white),
-            label: const Text('Call', style: TextStyle(color: Colors.white)),
+            icon: const Icon(Icons.call, color: Color.fromRGBO(28, 78, 216, 1)),
+            label: const Text('Call', style: TextStyle(color: Color.fromRGBO(28, 78, 216, 1))),
           ),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
-              foregroundColor: Colors.white,
+              backgroundColor: Colors.white,
+              side: const BorderSide(color: Color.fromRGBO(28, 78, 216, 1)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
             ),
             onPressed: () async {
               _showDialog(
@@ -256,8 +268,11 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                     children: [
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromRGBO(29, 78, 216, 1),
-                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.white,
+                          side: const BorderSide(color: Color.fromRGBO(28, 78, 216, 1)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
                         ),
                         onPressed: () async {
                           FilePickerResult? result =
@@ -268,8 +283,8 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                             });
                           }
                         },
-                        icon: const Icon(Icons.upload_file, color: Colors.white),
-                        label: const Text('Upload File / Image', style: TextStyle(color: Colors.white)),
+                        icon: const Icon(Icons.upload_file, color: Color.fromRGBO(28, 78, 216, 1)),
+                        label: const Text('Upload File / Image', style: TextStyle(color: Color.fromRGBO(28, 78, 216, 1))),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
@@ -293,8 +308,8 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
                 ],
               );
             },
-            icon: const Icon(Icons.attachment, color: Colors.white),
-            label: const Text('Attachment', style: TextStyle(color: Colors.white)),
+            icon: const Icon(Icons.attachment, color: Color.fromRGBO(28, 78, 216, 1)),
+            label: const Text('Attachment', style: TextStyle(color: Color.fromRGBO(28, 78, 216, 1))),
           ),
           // Calendar Container
           Container(
