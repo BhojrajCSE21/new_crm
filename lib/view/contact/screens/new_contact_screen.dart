@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_crm/models/contact/contact_model.dart';
 import 'package:new_crm/view_models/contact/contact_view_model.dart';
+import 'package:new_crm/models/contact/contact_model.dart';
 
 class NewContactScreen extends StatefulWidget {
   const NewContactScreen({super.key});
@@ -11,11 +11,10 @@ class NewContactScreen extends StatefulWidget {
 
 class _NewContactScreenState extends State<NewContactScreen> {
   final _formKey = GlobalKey<FormState>();
-  final ContactModel _contact = ContactModel();
-  final ContactViewModel _contactViewModel = ContactViewModel();
+  final ContactViewModel _contact = ContactViewModel();
+  final ContactModel _contactModel = ContactModel();
 
-  // Controllers
-  final TextEditingController _salutationController = TextEditingController();
+  // TextEditingControllers for each field
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
@@ -44,24 +43,17 @@ class _NewContactScreenState extends State<NewContactScreen> {
   final TextEditingController _otherStateController = TextEditingController();
   final TextEditingController _otherCountryController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _leadSourceController = TextEditingController();
+  final TextEditingController _contactOwnerController = TextEditingController();
 
-  // Dropdown options
-  final List<String> _salutations = [
-    '--None--',
-    'Mr.',
-    'Ms.',
-    'Mrs.',
-    'Dr.',
-    'Prof.'
-  ];
-  String _selectedSalutation = '--None--';
+  String? _selectedSalutation = '--None--';
+  final List<String> _salutations = ['--None--', 'Mr.', 'Ms.', 'Mrs.', 'Prof.'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("New Contact"),
-        backgroundColor: Color.fromRGBO(29, 78, 216, 1),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -74,91 +66,44 @@ class _NewContactScreenState extends State<NewContactScreen> {
                 label: "Salutation",
                 value: _selectedSalutation,
                 items: _salutations,
-                onChanged: (value) =>
-                    setState(() => _selectedSalutation = value!),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedSalutation = value;
+                  });
+                },
               ),
-              _buildTextField(
-                  label: "First Name", controller: _firstNameController),
-              _buildTextField(
-                  label: "Last Name", controller: _lastNameController),
-              _buildTextField(
-                  label: "Company Name", controller: _companyNameController),
-              _buildTextField(
-                  label: "Mobile",
-                  controller: _mobileController,
-                  keyboardType: TextInputType.phone),
-              _buildTextField(
-                  label: "Fax",
-                  controller: _faxController,
-                  keyboardType: TextInputType.phone),
-              _buildTextField(
-                  label: "Email",
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress),
+              _buildTextField(label: "First Name", controller: _firstNameController),
+              _buildTextField(label: "Last Name", controller: _lastNameController),
+              _buildTextField(label: "Company Name", controller: _companyNameController),
+              _buildTextField(label: "Mobile", controller: _mobileController, keyboardType: TextInputType.phone),
+              _buildTextField(label: "Fax", controller: _faxController, keyboardType: TextInputType.phone),
+              _buildTextField(label: "Email", controller: _emailController, keyboardType: TextInputType.emailAddress),
               _buildTextField(label: "Website", controller: _websiteController),
-              _buildTextField(
-                  label: "Account Name", controller: _accountNameController),
+              _buildTextField(label: "Account Name", controller: _accountNameController),
               _buildTextField(label: "Title", controller: _titleController),
-              _buildTextField(
-                  label: "Department", controller: _departmentController),
-              _buildTextField(
-                  label: "Date of Birth (YYYY-MM-DD)",
-                  controller: _dateOfBirthController,
-                  keyboardType: TextInputType.datetime),
-              _buildTextField(
-                  label: "Assistant", controller: _assistantController),
-              _buildTextField(
-                  label: "Assistant Phone",
-                  controller: _assistantPhoneController,
-                  keyboardType: TextInputType.phone),
-              const SizedBox(height: 16),
+              _buildTextField(label: "Department", controller: _departmentController),
+              _buildTextField(label: "Date of Birth (YYYY-MM-DD)", controller: _dateOfBirthController, keyboardType: TextInputType.datetime),
+              _buildTextField(label: "Assistant", controller: _assistantController),
+              _buildTextField(label: "Assistant Phone", controller: _assistantPhoneController, keyboardType: TextInputType.phone),
+
               _buildSectionHeader("Address Information"),
-              _buildTextField(
-                  label: "Mailing Street",
-                  controller: _mailingStreetController),
-              _buildTextField(
-                  label: "Mailing City", controller: _mailingCityController),
-              _buildTextField(
-                  label: "Mailing Zip Code",
-                  controller: _mailingZipCodeController,
-                  keyboardType: TextInputType.number),
-              _buildTextField(
-                  label: "Mailing State", controller: _mailingStateController),
-              _buildTextField(
-                  label: "Mailing Country",
-                  controller: _mailingCountryController),
-              _buildTextField(
-                  label: "Other Street", controller: _otherStreetController),
-              _buildTextField(
-                  label: "Other City", controller: _otherCityController),
-              _buildTextField(
-                  label: "Other Zip Code",
-                  controller: _otherZipCodeController,
-                  keyboardType: TextInputType.number),
-              _buildTextField(
-                  label: "Other State", controller: _otherStateController),
-              _buildTextField(
-                  label: "Other Country", controller: _otherCountryController),
-              const SizedBox(height: 16),
+              _buildTextField(label: "Mailing Street", controller: _mailingStreetController),
+              _buildTextField(label: "Mailing City", controller: _mailingCityController),
+              _buildTextField(label: "Mailing Zip Code", controller: _mailingZipCodeController, keyboardType: TextInputType.number),
+              _buildTextField(label: "Mailing State", controller: _mailingStateController),
+              _buildTextField(label: "Mailing Country", controller: _mailingCountryController),
+              _buildTextField(label: "Other Street", controller: _otherStreetController),
+              _buildTextField(label: "Other City", controller: _otherCityController),
+              _buildTextField(label: "Other Zip Code", controller: _otherZipCodeController, keyboardType: TextInputType.number),
+              _buildTextField(label: "Other State", controller: _otherStateController),
+              _buildTextField(label: "Other Country", controller: _otherCountryController),
+
               _buildSectionHeader("Description Information"),
-              _buildTextField(
-                  label: "Description",
-                  controller: _descriptionController,
-                  maxLines: 3),
+              _buildTextField(label: "Description", controller: _descriptionController),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _saveContact,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(29, 78, 216, 1),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text(
-                  "Save Contact",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
+                child: const Text("Save Contact"),
               ),
             ],
           ),
@@ -171,7 +116,6 @@ class _NewContactScreenState extends State<NewContactScreen> {
     required String label,
     required TextEditingController controller,
     TextInputType keyboardType = TextInputType.text,
-    int maxLines = 1,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -179,23 +123,18 @@ class _NewContactScreenState extends State<NewContactScreen> {
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          border: OutlineInputBorder(),
         ),
         keyboardType: keyboardType,
-        maxLines: maxLines,
       ),
     );
   }
 
   Widget _buildDropdownField({
     required String label,
-    required String value,
+    required String? value,
     required List<String> items,
-    required ValueChanged<String?> onChanged,
+    required void Function(String?) onChanged,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -203,15 +142,14 @@ class _NewContactScreenState extends State<NewContactScreen> {
         value: value,
         decoration: InputDecoration(
           labelText: label,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          border: OutlineInputBorder(),
         ),
-        items: items
-            .map((item) => DropdownMenuItem(value: item, child: Text(item)))
-            .toList(),
+        items: items.map((String item) {
+          return DropdownMenuItem<String>(
+            value: item,
+            child: Text(item),
+          );
+        }).toList(),
         onChanged: onChanged,
       ),
     );
@@ -223,17 +161,17 @@ class _NewContactScreenState extends State<NewContactScreen> {
       child: Text(
         title,
         style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.blueAccent),
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
 
   void _saveContact() async {
     if (_formKey.currentState!.validate()) {
-      // Save all field values to the contact model
-      _contact.salutation = _selectedSalutation;
+      // Assigning all form values to the ContactViewModel
+      _contact.salutation = _selectedSalutation == '--None--' ? null : _selectedSalutation;
       _contact.firstName = _firstNameController.text;
       _contact.lastName = _lastNameController.text;
       _contact.companyName = _companyNameController.text;
@@ -258,9 +196,11 @@ class _NewContactScreenState extends State<NewContactScreen> {
       _contact.otherState = _otherStateController.text;
       _contact.otherCountry = _otherCountryController.text;
       _contact.description = _descriptionController.text;
+      _contact.leadSource = _leadSourceController.text;
+      _contact.contactOwner = _contactOwnerController.text;
 
-      // Call the ViewModel to save the contact
-      final success = await _contactViewModel.createContact(_contact);
+      final success = await _contactModel.createContact(_contact);
+
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Contact created successfully!")),
