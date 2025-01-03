@@ -360,7 +360,7 @@ class MainMenuDrawer extends StatelessWidget {
               // Navigate to the login screen
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => LoginScreen()),
+                MaterialPageRoute(builder: (context) => LoginView()),
                 (Route<dynamic> route) => false, // Remove all previous routes
               );
             },

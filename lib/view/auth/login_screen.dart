@@ -2,153 +2,105 @@ import 'package:flutter/material.dart';
 import 'package:new_crm/view_models/login_view_model.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginView extends StatefulWidget {
+  const LoginView({Key? key}) : super(key: key);
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  LoginScreen({super.key});
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     final loginViewModel = Provider.of<LoginViewModel>(context);
 
     return Scaffold(
-      body: Stack(
-        children: [
-          // Background Image
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/login.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          // Form Content
-          Center(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Add spacing above the Welcome Text
-                  const SizedBox(height: 120), // Adjust height to push text down
-
-                  // Welcome Text
-                  const Text(
-                    'Welcome To\nLogin Page',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(204, 7, 7, 7),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Rounded Container for Input Fields
-                  Container(
-                    padding: const EdgeInsets.all(20.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        // Username Field
-                        TextField(
-                          controller: _usernameController,
-                          decoration: InputDecoration(
-                            labelText: 'Username',
-                            prefixIcon: const Icon(Icons.person),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-
-                        // Password Field
-                        TextField(
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            prefixIcon: const Icon(Icons.lock),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                          ),
-                          obscureText: true,
-                        ),
-                        const SizedBox(height: 16),
-
-                        // Row with Forgot Password and Circle Avatar Login Button
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // Forgot Password
-                            TextButton(
-                              onPressed: () {
-                                // TODO: Handle "Forgot Password" functionality
-                              },
-                              child: const Text(
-                                'Forgot Password?',
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                            ),
-
-                            // Login Button
-                            loginViewModel.isLoading
-                                ? const CircularProgressIndicator()
-                                : GestureDetector(
-                                    onTap: () async {
-                                      final success = await loginViewModel.login(
-                                        _usernameController.text,
-                                        _passwordController.text,
-                                      );
-
-                                      if (success) {
-                                        Navigator.pushReplacementNamed(
-                                            context, '/home');
-                                      } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text('Login failed'),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    child: const CircleAvatar(
-                                      radius: 25, // Smaller size
-                                      backgroundColor: Colors.blue,
-                                      child: Icon(
-                                        Icons.arrow_forward,
-                                        color: Colors.white,
-                                        size: 24,
-                                      ),
-                                    ),
-                                  ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+      appBar: AppBar(
+        title: const Text('Login'),
       ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Login to Your Account',
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _usernameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Username',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your username';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
+                        labelText: 'Password',
+                        border: OutlineInputBorder(),
+                      ),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            setState(() {
+                              _isLoading = true;
+                            });
+
+                            final loginRequest = {
+                              'username': _usernameController.text.trim(),
+                              'password': _passwordController.text.trim(),
+                            };
+
+                            await loginViewModel.loginApi(context, loginRequest);
+
+                            setState(() {
+                              _isLoading = false;
+                            });
+                          }
+                        },
+                        child: const Text('Login'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
     );
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }

@@ -1,50 +1,67 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:new_crm/utils/general/secure_storage.dart';
-import 'package:new_crm/utils/urls/app_urls.dart';
-import '../models/login_model.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:new_crm/models/login_model.dart';
+import 'package:new_crm/utils/general/utils.dart';
+import 'package:new_crm/view/auth/login_screen.dart';
+import 'package:new_crm/view/dashboard/screens/home_view.dart';
 
-class LoginViewModel extends ChangeNotifier {
-  final SecureStorage _secureStorage = SecureStorage();
-  bool _isLoading = false;
+class LoginViewModel with ChangeNotifier {
+  final loginService = LoginApiService();
+  final _secureStorage = const FlutterSecureStorage();
 
-  bool get isLoading => _isLoading;
+  String? _userName;
+  String? _password;
+  bool _isAuthenticated = false;
 
-  Future<bool> login(String username, String password) async {
-    _isLoading = true;
-    notifyListeners();
+  String? get userName => _userName;
+  String? get password => _password;
+  bool get isAuthenticated => _isAuthenticated;
 
+  Future<void> loginApi(BuildContext context, Map<String, dynamic> data) async {
     try {
-      final response = await http.post(
-        Uri.parse(AppUrls.loginUrl),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(
-            LoginRequest(username: username, password: password).toJson()),
-      );
+      final loginResponse = await loginService.loginApi(context, data);
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+      if (loginResponse != null) {
+        _userName = data['username'];
+        _password = data['password'];
+        _isAuthenticated = true;
 
-        // Extract the access token from the response
-        final accessToken = data['access'];
+        await _secureStorage.write(key: 'username', value: _userName);
+        await _secureStorage.write(key: 'password', value: _password);
 
-        // Store the access token in secure storage
-        await _secureStorage.writeToken(accessToken);
-
-        _isLoading = false;
         notifyListeners();
-        return true;
-      } else {
-        _isLoading = false;
-        notifyListeners();
-        return false;
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
       }
-    } catch (e) {
-      print('Login error: $e');
-      _isLoading = false;
+    } catch (error) {
+      Utils.flushbarErrorMessage("An error occurred during login: $error", context);
+    }
+  }
+
+  Future<void> loadUserData() async {
+    _userName = await _secureStorage.read(key: 'username') ?? "";
+    _password = await _secureStorage.read(key: 'password') ?? "";
+    notifyListeners();
+  }
+
+  Future<void> logoutUser(BuildContext context) async {
+    try {
+      await _secureStorage.deleteAll();
+      _userName = null;
+      _password = null;
+      _isAuthenticated = false;
+
       notifyListeners();
-      return false;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginView()),
+      );
+    } catch (error) {
+      Utils.flushbarErrorMessage("An error occurred during logout: $error", context);
     }
   }
 }
